@@ -43,7 +43,7 @@ module Rbandsintown
     #     artist.events
     def events(options = {})
       return [] unless name
-      response = Rbandsintown.request("/artists/#{parse_name(name)}/events", options)
+      response = Rbandsintown.request("/artists/#{self.class.parse_name(name)}/events", options)
       response.map { |data| Event.new data }
     end
 
