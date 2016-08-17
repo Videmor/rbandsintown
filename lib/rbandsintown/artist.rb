@@ -6,7 +6,7 @@ module Rbandsintown
     #     # using artist name
     #     artist = Rbandsintown::Artist.find("Little Brother")
     def self.find(name, options = {})
-      self.find_by('artist', name, options)
+      self.request(parse_name(name), options)
     end
 
     # Returns basic information for a single artist
@@ -15,7 +15,7 @@ module Rbandsintown
     #     # using artist mbid
     #     artist = Rbandsintown::Artist.find_mbid("b929c0c9-5de0-4d87-8eb9-365ad1725629")
     def self.find_mbid(mbid, options = {})
-      self.find_by('mbid', mbid, options)
+      self.request("mbid_#{mbid}", options)
     end
 
     def initialize(options = {})
@@ -44,7 +44,22 @@ module Rbandsintown
     def events(options = {})
       return [] unless mbid
       response = Rbandsintown.request("/artists/mbid_#{mbid}/events", options)
-      response.map { |data| Rbandsintown::Event.new data }
+      response.map { |data| Event.new data }
+    end
+
+    def self.resource
+      'artist'
+    end
+
+    private
+
+    def self.parse_name(name)
+      name.gsub!('&', 'And')
+      name.gsub!('+', 'Plus')
+      name = name.split.map { |w| w.capitalize }.join if name =~ /\s/
+      name.gsub!('/', CGI.escape('/'))
+      name.gsub!('?', CGI.escape('?'))
+      URI.escape(name)
     end
   end
 end

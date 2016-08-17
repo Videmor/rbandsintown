@@ -1,8 +1,14 @@
 module Rbandsintown
   class Base
-    def self.find_by(type, name, params = {})
-      response = Rbandsintown.request("/artists/#{parse_name(type, name)}", params)
-      Artist.new response
+    def self.request(path, params = {})
+      response = Rbandsintown.request("/#{self.resource}s/#{path}", params)
+      type_class = Rbandsintown.const_get(self.resource.capitalize)
+
+      if response.is_a? Array
+        response.map { |data| type_class.new(data) if data }
+      else
+        type_class.new response
+      end
     end
 
     def method_missing(method_name, *args)
@@ -10,21 +16,6 @@ module Rbandsintown
       super unless instance_variable_defined? attr
 
       instance_variable_get attr
-    end
-
-    private
-
-    def self.parse_name(type, name)
-      if type == 'artist'
-        name.gsub!('&', 'And')
-        name.gsub!('+', 'Plus')
-        name = name.split.map { |w| w.capitalize }.join if name =~ /\s/
-        name.gsub!('/', CGI.escape('/'))
-        name.gsub!('?', CGI.escape('?'))
-        URI.escape(name)
-      else
-        "mbid_#{name}"
-      end
     end
   end
 end

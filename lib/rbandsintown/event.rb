@@ -29,8 +29,7 @@ module Rbandsintown
     #    events = Rbandsintown::Event.search(location: 'Lima')
     #    events = Rbandsintown::Event.search(location: 'Lima', artists: ['Aerosmith', 'Richie Ramone'], radius: 8, start_date: 1.month.from_now, end_date: 5.month.from_now)
     def self.search(options = {})
-      response = Rbandsintown.request('/events/search', options)
-      response.map { |data| Rbandsintown::Event.new data }
+      self.request('search', options)
     end
 
     # Returns recommended events for a single artist matching search criteria
@@ -41,8 +40,7 @@ module Rbandsintown
     # @example
     #     events = Rbandsintown::Event.recommended(artists: ['Led Zeppelin'], location: 'Boston, MA')
     def self.recommended(options = {})
-      response = Rbandsintown.request('/events/recommended', options)
-      response.map { |data| Rbandsintown::Event.new data }
+      self.request('recommended', options)
     end
 
     # Returns events going on sale in the next week (including today). Supports location filtering.
@@ -50,8 +48,7 @@ module Rbandsintown
     # @example
     #     Rbandsintown::Event.on_sale_soon( location: "Lima", radius: 10 )
     def self.on_sale_soon(options = {})
-      response = Rbandsintown.request('/events/on_sale_soon', options)
-      response.map { |data| Rbandsintown::Event.new data }
+      self.request('on_sale_soon', options)
     end
 
     # Returns events that have been created, updated or deleted in the last day. Useful in syncing data with Bandsintown.
@@ -59,8 +56,11 @@ module Rbandsintown
     # @example
     #     Rbandsintown::Event.daily
     def self.daily
-      response = Rbandsintown.request('/events/daily')
-      response.map { |data| Rbandsintown::Event.new data }
+      self.request('daily')
+    end
+
+    def self.resource
+      'event'
     end
   end
 end
