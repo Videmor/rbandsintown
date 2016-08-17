@@ -24,51 +24,51 @@ Or install it yourself as:
 
 ### Requiring
 
-  require 'rbandsintown'
+    require 'rbandsintown'
 
 ### Setting the bandsintown app_id parameter
 
-  Rbandsintown.app_id = 'YOUR_APP_ID'
+    Rbandsintown.app_id = 'YOUR_APP_ID'
 
 ### Find basic information about an artist
 
-  artist = Rbandsintown::Artist.find("AC/DC")
-  artist.name                 #=> "AC/DC"
-  artist.image_url            #=> "https://s3.amazonaws.com/bit-photos/large/6839662.jpeg" 
-  artist.upcoming_event_count #=> 11
-  artist.on_tour?             #= true
+    artist = Rbandsintown::Artist.find("AC/DC")
+    artist.name                 #=> "AC/DC"
+    artist.image_url            #=> "https://s3.amazonaws.com/bit-photos/large/6839662.jpeg" 
+    artist.upcoming_event_count #=> 11
+    artist.on_tour?             #= true
 
 ### Find all upcoming events for a given artist
 
-  artist = Rbandsintown::Artist.find("ACD/DC")
-  events = artist.events
+    artist = Rbandsintown::Artist.find("ACD/DC")
+    events = artist.events
 
 ### Find all upcoming events for a given artist using mbid (music brainz id)
   
-  artist = Rbandsintown::Artist.find_mbid("b929c0c9-5de0-4d87-8eb9-365ad1725629")
-  events = artist.events
+    artist = Rbandsintown::Artist.find_mbid("b929c0c9-5de0-4d87-8eb9-365ad1725629")
+    events = artist.events
 
 ### Find events matching search criteria 
 
-  events = Rbandsintown::Event.search(artists: ['Aerosmith'], location: 'Lima')
+    events = Rbandsintown::Event.search(artists: ['Aerosmith'], location: 'Lima')
 
-  events = Rbandsintown::Event.search(artists: ['mbid_b929c0c9-5de0-4d87-8eb9-365ad1725629'], location: 'Lima')
+    events = Rbandsintown::Event.search(artists: ['mbid_b929c0c9-5de0-4d87-8eb9-365ad1725629'], location: 'Lima')
 
-  events = Rbandsintown::Event.search(location: 'Lima')
+    events = Rbandsintown::Event.search(location: 'Lima')
 
-  events = Rbandsintown::Event.search(location: 'Lima', artists: ['Aerosmith', 'Richie Ramone'], radius: 8, start_date: Time.now, end_date: 1.month.from_now)
+    events = Rbandsintown::Event.search(location: 'Lima', artists: ['Aerosmith', 'Richie Ramone'], radius: 8, start_date: Time.now, end_date: 1.month.from_now)
 
 ### Find recommended events around Lima for fans of Slipknot
 
-  events = Rbandsintown::Event.recommended(artists: ['Slipknot'], location: 'Lima')
+    events = Rbandsintown::Event.recommended(artists: ['Slipknot'], location: 'Lima')
 
 ### Find events going on sale in the next week 
 
-  events = Rbandsintown::Event.on_sale_soon( location: "Lima", radius: 10 )
+    events = Rbandsintown::Event.on_sale_soon( location: "Lima", radius: 10 )
 
 ### Find events that have been created/updated/deleted in the last day
 
-  events = Bandsintown::Event.daily
+    events = Bandsintown::Event.daily
 
 ## Development
 
@@ -78,7 +78,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rbandsintown. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/videmor/rbandsintown. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 
 ## License
