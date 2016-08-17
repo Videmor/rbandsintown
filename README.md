@@ -1,8 +1,8 @@
 # Rbandsintown
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/rbandsintown`. To experiment with that code, run `bin/console` for an interactive prompt.
+This is a ruby wrapper for the Bandsintown API.
 
-TODO: Delete this and the text above, and describe your gem
+For more information visit http://www.bandsintown.com/api/overview
 
 ## Installation
 
@@ -22,7 +22,53 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Requiring
+
+  require 'rbandsintown'
+
+### Setting the bandsintown app_id parameter
+
+  Rbandsintown.app_id = 'YOUR_APP_ID'
+
+### Find basic information about an artist
+
+  artist = Rbandsintown::Artist.find("AC/DC")
+  artist.name                 #=> "AC/DC"
+  artist.image_url            #=> "https://s3.amazonaws.com/bit-photos/large/6839662.jpeg" 
+  artist.upcoming_event_count #=> 11
+  artist.on_tour?             #= true
+
+### Find all upcoming events for a given artist
+
+  artist = Rbandsintown::Artist.find("ACD/DC")
+  events = artist.events
+
+### Find all upcoming events for a given artist using mbid (music brainz id)
+  
+  artist = Rbandsintown::Artist.find_mbid("b929c0c9-5de0-4d87-8eb9-365ad1725629")
+  events = artist.events
+
+### Find events matching search criteria 
+
+  events = Rbandsintown::Event.search(artists: ['Aerosmith'], location: 'Lima')
+
+  events = Rbandsintown::Event.search(artists: ['mbid_b929c0c9-5de0-4d87-8eb9-365ad1725629'], location: 'Lima')
+
+  events = Rbandsintown::Event.search(location: 'Lima')
+
+  events = Rbandsintown::Event.search(location: 'Lima', artists: ['Aerosmith', 'Richie Ramone'], radius: 8, start_date: Time.now, end_date: 1.month.from_now)
+
+### Find recommended events around Lima for fans of Slipknot
+
+  events = Rbandsintown::Event.recommended(artists: ['Slipknot'], location: 'Lima')
+
+### Find events going on sale in the next week 
+
+  events = Rbandsintown::Event.on_sale_soon( location: "Lima", radius: 10 )
+
+### Find events that have been created/updated/deleted in the last day
+
+  events = Bandsintown::Event.daily
 
 ## Development
 

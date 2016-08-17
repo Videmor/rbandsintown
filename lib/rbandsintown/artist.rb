@@ -4,7 +4,7 @@ module Rbandsintown
     # See http://www.bandsintown.com/api/requests#artists-get
     # @example
     #     # using artist name
-    #     artist = Rbandsintown::Artist.find("Little Brother")
+    #     artist = Rbandsintown::Artist.find("ACD/DC")
     def self.find(name, options = {})
       self.request(parse_name(name), options)
     end
@@ -25,7 +25,7 @@ module Rbandsintown
       @facebook_tour_dates_url  = options['facebook_tour_dates_url']
       @facebook_page_url        = options['facebook_page_url']
       @mbid                     = options['mbid']
-      @upcoming_events_count    = options['upcoming_events_count']
+      @upcoming_event_count     = options['upcoming_event_count']
       @tracker_count            = options['tracker_count']
       @website                  = options['website']
       @url                      = options['url']
@@ -42,9 +42,13 @@ module Rbandsintown
     #     artist = Rbandsintown::Artist.find_mbid("b929c0c9-5de0-4d87-8eb9-365ad1725629")
     #     artist.events
     def events(options = {})
-      return [] unless mbid
-      response = Rbandsintown.request("/artists/mbid_#{mbid}/events", options)
+      return [] unless name
+      response = Rbandsintown.request("/artists/#{parse_name(name)}/events", options)
       response.map { |data| Event.new data }
+    end
+
+    def tour?
+      @upcoming_event_count > 0
     end
 
     def self.resource

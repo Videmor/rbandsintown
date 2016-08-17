@@ -18,7 +18,7 @@ module Rbandsintown
       @venue              = Rbandsintown::Venue.new options['venue']
     end
 
-    # Returns events for a single artist matching search criteria
+    # Returns events matching search criteria
     # @required
     #     artists or location
     # See http://www.bandsintown.com/api/1.0/requests#events-search
@@ -38,7 +38,7 @@ module Rbandsintown
     # See http://www.bandsintown.com/api/1.0/requests#events-recommended
     # See http://www.bandsintown.com/api/requests#artists-recommended-events
     # @example
-    #     events = Rbandsintown::Event.recommended(artists: ['Led Zeppelin'], location: 'Boston, MA')
+    #     events = Rbandsintown::Event.recommended(artists: ['Slipknot'], location: 'Lima')
     def self.recommended(options = {})
       self.request('recommended', options)
     end
@@ -46,7 +46,7 @@ module Rbandsintown
     # Returns events going on sale in the next week (including today). Supports location filtering.
     # See http://www.bandsintown.com/api/1.0/requests#events-on-sale-soon
     # @example
-    #     Rbandsintown::Event.on_sale_soon( location: "Lima", radius: 10 )
+    #     events = Rbandsintown::Event.on_sale_soon( location: "Lima", radius: 10 )
     def self.on_sale_soon(options = {})
       self.request('on_sale_soon', options)
     end
@@ -54,7 +54,7 @@ module Rbandsintown
     # Returns events that have been created, updated or deleted in the last day. Useful in syncing data with Bandsintown.
     # See http://www.bandsintown.com/api/1.0/requests#events-daily
     # @example
-    #     Rbandsintown::Event.daily
+    #     events = Rbandsintown::Event.daily
     def self.daily
       self.request('daily')
     end
