@@ -60,6 +60,7 @@ module Rbandsintown
     def self.parse_name(name)
       name.gsub!('&', 'And')
       name.gsub!('+', 'Plus')
+      name.gsub!('"', '')
       name = name.split.map { |w| w.capitalize }.join if name =~ /\s/
       name.gsub!('/', CGI.escape('/'))
       name.gsub!('?', CGI.escape('?'))
